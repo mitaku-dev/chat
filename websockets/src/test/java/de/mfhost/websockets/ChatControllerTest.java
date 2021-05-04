@@ -70,20 +70,6 @@ public class ChatControllerTest {
                 .connect(String.format("ws://localhost:%d/ws", port), new StompSessionHandlerAdapter() {})
                 .get(1, SECONDS);
 
-        /** for later check if user 1 recieves
-        session.subscribe("/app/chat", new StompFrameHandler() {
-
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return ChatMessage.class;
-            }
-
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("Received message: " + payload);
-                blockingQueue.add((ChatMessage) payload);
-            }
-        }); **/
 
         ChatMessage message = ChatMessage.builder()
                 .timestamp(new Date())
