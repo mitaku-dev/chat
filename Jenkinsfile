@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh './gradlew assemble'
+                sh './websockets/gradlew assemble'
             }
         }
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh './websockets/gradlew test'
             }
         }
     }
