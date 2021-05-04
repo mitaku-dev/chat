@@ -1,0 +1,34 @@
+de/mfhost/websockets/service/ChatRoomService.java
+ de.mfhost.websockets.service.ChatRoomService
+de/mfhost/websockets/models/ChatNotification.java
+ de.mfhost.websockets.models.ChatNotification
+ de.mfhost.websockets.models.ChatNotification$ChatNotificationBuilder
+de/mfhost/websockets/WebsocketsApplication.java
+ de.mfhost.websockets.WebsocketsApplication
+de/mfhost/websockets/models/ChatRoom.java
+ de.mfhost.websockets.models.ChatRoom
+ de.mfhost.websockets.models.ChatRoom$ChatRoomBuilder
+de/mfhost/websockets/repository/ChatRoomRepository.java
+ de.mfhost.websockets.repository.ChatRoomRepository
+de/mfhost/websockets/exceptions/ResourceNotFoundException.java
+ de.mfhost.websockets.exceptions.ResourceNotFoundException
+de/mfhost/websockets/repository/ChatMessageRepository.java
+ de.mfhost.websockets.repository.ChatMessageRepository
+de/mfhost/websockets/service/ChatMessageService.java
+ de.mfhost.websockets.service.ChatMessageService
+de/mfhost/websockets/controller/ChatController.java
+ de.mfhost.websockets.controller.ChatController
+de/mfhost/websockets/models/ChatMessage.java
+ de.mfhost.websockets.models.ChatMessage
+ de.mfhost.websockets.models.ChatMessage$ChatMessageBuilder
+de/mfhost/websockets/models/MessageStatus.java
+ de.mfhost.websockets.models.MessageStatus
+de/mfhost/websockets/Config/WebSocketConfig.java
+ de.mfhost.websockets.Config.WebSocketConfig
+de/mfhost/websockets/models/User.java
+ de.mfhost.websockets.models.User
+ de.mfhost.websockets.models.User$UserBuilder
+de/mfhost/websockets/controller/UserController.java
+ de.mfhost.websockets.controller.UserController
+de/mfhost/websockets/repository/UserRepository.java
+ de.mfhost.websockets.repository.UserRepository

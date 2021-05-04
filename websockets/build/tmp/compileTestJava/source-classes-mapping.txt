@@ -1,0 +1,5 @@
+de/mfhost/websockets/WebsocketsApplicationTests.java
+ de.mfhost.websockets.WebsocketsApplicationTests
+de/mfhost/websockets/ChatControllerTest.java
+ de.mfhost.websockets.ChatControllerTest
+ de.mfhost.websockets.ChatControllerTest$1
