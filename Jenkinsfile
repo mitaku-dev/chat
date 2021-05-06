@@ -29,10 +29,14 @@ pipeline {
                                     remote.identityFile = identity
                                     echo "start deploying"
 
+                                    try {
                                     def res2 = sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true', sudo: true
-                                    echo res2
+                                    echo "stop:" + res2
                                     def res3 = sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be', sudo: true
-                                    echo res3
+                                    echo "run:" + res3
+                                    } catch {
+                                    echo "error"
+                                    }
                                 }
 
 
