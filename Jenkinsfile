@@ -7,8 +7,8 @@ pipeline {
 
 
     def remote = [:]
-    remote.name = "node-1"
-    remote.host = "10.000.000.153"
+    remote.name = "root"
+    remote.host = "95.111.255.170"
     remote.allowAnyHosts = true
 
 
