@@ -8,8 +8,16 @@ pipeline {
         stage('build') {
             steps {
                 sh './gradlew build -x test'
-                sh 'docker build --build-arg JAR_FILE=build/libs/*.jar -t images.mfhost.de/chat-be .'
-                sh 'docker push images.mfhost.de/chat-be'
+            }
+        }
+        stage('build docker') {
+            agent {
+                docker {
+                    image 'gcr.io/kaniko-project/executor:latest'
+                }
+                steps {
+                    sh './run_in_docker.sh . . images.mfhost.de/chat-be:latest'
+                }
             }
         }
         stage('Test') {
