@@ -32,9 +32,9 @@ pipeline {
                                 sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
                                 sshCommand remote: remote, command: 'docker kill chat_be || true'
                                 sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
+                                sh 'echo deploy sucessfull'
 
                              }
-                                         sh 'echo deploy sucessfull'
             }
 
            }
