@@ -26,12 +26,15 @@ pipeline {
                                     remote.name = "root"
                                     remote.host = "95.111.255.170"
                                     remote.allowAnyHosts = true
+
+                                    def res = sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
+                                    echo res
+                                    sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true'
+                                    sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
                                 }
 
-                                //TODO remove old
-                                echo sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
-                                echo sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true'
-                                echo sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
+
+
                                 sh 'echo deploy sucessfull'
 
                              }
