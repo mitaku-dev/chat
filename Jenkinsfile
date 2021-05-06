@@ -29,10 +29,10 @@ pipeline {
 
                                     def res = sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
                                     echo res
-                                    def res = sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true'
-                                    echo res
-                                    def res = sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
-                                    echo res
+                                    def res2 = sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true'
+                                    echo res2
+                                    def res3 = sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
+                                    echo res3
                                 }
 
 
