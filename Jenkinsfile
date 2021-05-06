@@ -1,5 +1,5 @@
 pipeline {
-    agent    node {
+    agent    { node {
                              withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
                                     def remote = [:]
 
@@ -11,6 +11,7 @@ pipeline {
 
 
                              }
+                         }
                          }
 
     triggers {
