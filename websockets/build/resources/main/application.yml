@@ -1,6 +1,0 @@
-spring:
-    data:
-        mongodb:
-            database: chat_service
-            host: mfhost.de
-            port: 27017

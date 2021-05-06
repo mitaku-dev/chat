@@ -8,6 +8,8 @@ pipeline {
         stage('build') {
             steps {
                 sh './gradlew build -x test'
+                sh 'docker build --build-arg JAR_FILE=build/libs/\*.jar -t images.mfhost.de/chat-be .'
+                sh 'docker push images.mfhost.de/chat-be'
             }
         }
         stage('Test') {
