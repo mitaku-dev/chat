@@ -17,18 +17,19 @@ pipeline {
             }
         }
            stage("deploy") {
-                 withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-                    def remote = [:]
-                    remote.user = userName
-                    remote.identityFile = identity
-                    remote.name = "root"
-                    remote.host = "95.111.255.170"
-                    remote.allowAnyHosts = true
+            steps {
+            withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                                def remote = [:]
+                                remote.user = userName
+                                remote.identityFile = identity
+                                remote.name = "root"
+                                remote.host = "95.111.255.170"
+                                remote.allowAnyHosts = true
 
-                    sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
+                                sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
 
-                 }
-
+                             }
+            }
            }
         stage('Test') {
             steps {
