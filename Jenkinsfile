@@ -4,6 +4,15 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
+
+
+    def remote = [:]
+    remote.name = "node-1"
+    remote.host = "10.000.000.153"
+    remote.allowAnyHosts = true
+
+
+
     stages {
         stage('build') {
             steps {
@@ -12,6 +21,15 @@ pipeline {
                 sh 'docker push images.mfhost.de/chat-be'
             }
         }
+            node {
+                   withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                       remote.user = userName
+                       remote.identityFile = identity
+                       stage("deploy") {
+                           sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
+                       }
+                   }
+               }
         stage('Test') {
             steps {
                 sh './gradlew test'
