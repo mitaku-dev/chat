@@ -30,9 +30,11 @@ pipeline {
 
 
                                 sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
+                                sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080'
 
                              }
             }
+              sh 'echo deploy sucessfull'
            }
         stage('Test') {
             steps {
