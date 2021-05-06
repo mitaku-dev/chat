@@ -30,25 +30,6 @@ pipeline {
                         sh 'docker stop chat_be || true && docker rm chat_be || true'
                         sh 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be'
                     }
-
-            withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-                                script {
-                                    remote.user = userName
-                                    remote.identityFile = identity
-                                    echo "start deploying"
-
-
-                                    sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true', sudo: true
-                                    sshCommand remote: remote, command: 'docker run images.mfhost.de/chat-be -d -p 3333:8080 --name chat_be', sudo: true
-
-
-                                }
-
-
-
-                                sh 'echo deploy sucessfull'
-
-                             }
             }
 
            }
