@@ -1,10 +1,21 @@
 pipeline {
-    agent any
+    agent    node {
+                             withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                                    def remote = [:]
+
+                                 remote.user = userName
+                                 remote.identityFile = identity
+                                  remote.name = "root"
+                                  remote.host = "95.111.255.170"
+                                  remote.allowAnyHosts = true
+
+
+                             }
+                         }
 
     triggers {
         pollSCM '* * * * *'
     }
-
 
 
 
@@ -17,21 +28,9 @@ pipeline {
                 sh 'docker push images.mfhost.de/chat-be'
             }
         }
-            node {
-                   withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-                          def remote = [:]
-
-                       remote.user = userName
-                       remote.identityFile = identity
-                        remote.name = "root"
-                        remote.host = "95.111.255.170"
-                        remote.allowAnyHosts = true
-
-                       stage("deploy") {
-                           sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
-                       }
-                   }
-               }
+           stage("deploy") {
+                sshCommand remote: remote, command: 'docker pull images.mfhost.de/chat-be'
+           }
         stage('Test') {
             steps {
                 sh './gradlew test'
@@ -46,3 +45,4 @@ pipeline {
         }
     }
 }
+
