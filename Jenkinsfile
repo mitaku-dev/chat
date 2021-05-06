@@ -1,6 +1,4 @@
 def remote = [:]
-remote.user = userName
-remote.identityFile = identity
 remote.name = "root"
 remote.host = "95.111.255.170"
 remote.allowAnyHosts = true
@@ -27,8 +25,9 @@ pipeline {
             steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'sshAuth', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
                                 script {
-
-
+                                    remote.user = userName
+                                    remote.identityFile = identity
+                                    echo "start deploying"
 
                                     def res2 = sshCommand remote: remote, command: 'docker stop chat_be || true && docker rm chat_be || true'
                                     echo res2
