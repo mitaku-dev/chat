@@ -5,14 +5,10 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
-        stage('init') {
-            def dockerHome = tool 'docker-tool'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
-        }
         stage('build') {
             steps {
                 sh './gradlew build -x test'
-                sh 'docker build --build-arg JAR_FILE=build/libs/\\*.jar -t images.mfhost.de/chat-be .'
+                sh 'docker build --build-arg JAR_FILE=build/libs/*.jar -t images.mfhost.de/chat-be .'
                 sh 'docker push images.mfhost.de/chat-be'
             }
         }
