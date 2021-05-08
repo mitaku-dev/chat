@@ -16,6 +16,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
@@ -39,6 +40,7 @@ public class ChatControllerTest {
     private Integer port;
 
     WebSocketStompClient webSocketStompClient;
+    WebSocketStompClient webSocketStompClient2;
 
     @Autowired
     ChatMessageService chatMessageService;
@@ -56,6 +58,13 @@ public class ChatControllerTest {
                         List.of(new WebSocketTransport(new StandardWebSocketClient()))
                 )
         );
+
+        this.webSocketStompClient2 = new WebSocketStompClient(
+                new SockJsClient(
+                        List.of(new WebSocketTransport(new StandardWebSocketClient()))
+                )
+        );
+
     }
 
 
@@ -66,9 +75,14 @@ public class ChatControllerTest {
 
         webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
+
+        StompHeaders connectHeaders = new StompHeaders();
+        connectHeaders.add("Authorization", "Baerer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDk2NzM5MDU1ODA5MjdlMmM5OTFmMDEsdGVzdCIsImlzcyI6Im1maG9zdC5kZSIsImlhdCI6MTYyMDQ3ODk0OSwiZXhwIjoxNjIxMDgzNzQ5fQ.jGTdoufAHrJkLxQsYuLc4L6OvHPnk8njVTsVh59VRaAowc-n6v3oOqbSrfS25tWM_ZffOtiylf8q0Eil2HH0PA");
+
         StompSession session = webSocketStompClient
-                .connect(String.format("ws://localhost:%d/ws", port), new StompSessionHandlerAdapter() {})
+                .connect(String.format("ws://localhost:%d/ws", port), new WebSocketHttpHeaders(), connectHeaders,  new StompSessionHandlerAdapter() {})
                 .get(1, SECONDS);
+
 
 
         ChatMessage message = ChatMessage.builder()

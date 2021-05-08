@@ -3,8 +3,12 @@ package de.mfhost.websockets.controller;
 import de.mfhost.websockets.exceptions.ResourceNotFoundException;
 import de.mfhost.websockets.models.User;
 import de.mfhost.websockets.repository.UserRepository;
+import de.mfhost.websockets.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +21,12 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable String id){
         Optional<User> user = userRepository.findById(id);
@@ -25,8 +35,20 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user){
+
+
+        //username dosn't exist yet
+        if (userRepository.findByName(user.getName()).isPresent())
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
+        //TODO validate password
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User responseUser = userRepository.save(user);
-        return ResponseEntity.ok(responseUser);
+        return ResponseEntity.ok().header(
+                HttpHeaders.AUTHORIZATION,
+                jwtTokenUtil.generateAccessToken(user)
+        ).body(responseUser);
     }
 
     @GetMapping

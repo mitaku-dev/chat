@@ -22,7 +22,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'junit:junit:4.12'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+
+	implementation 'junit:junit:4.12'
 	implementation 'junit:junit:4.12'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
